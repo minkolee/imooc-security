@@ -1,6 +1,11 @@
 package com.imooc.security.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.imooc.security.validator.MyValid;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import java.util.Date;
 
 public class User {
 
@@ -26,16 +31,30 @@ public class User {
 
     // 2 给字段加上视图
     @JsonView(UserSimpleView.class)
+    @NotBlank(message = "用户名不能为空白")
     private String username;
 
     @JsonView(UserDetailView.class)
+    @NotBlank(message = "密码不能为空白")
+    @MyValid
     private String password;
 
     @JsonView(UserSimpleView.class)
-    public String id;
+    private String id;
+
+    @Past(message = "必须是过去的日期")
+    private Date birthday;
 
     public String getId() {
         return id;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public void setId(String id) {
@@ -63,6 +82,8 @@ public class User {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", id='" + id + '\'' +
+                ", birthday=" + birthday +
                 '}';
     }
 

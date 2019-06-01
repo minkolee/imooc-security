@@ -2,8 +2,11 @@ package com.imooc.security.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.imooc.security.domain.User;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +37,41 @@ public class UserController {
 
     @PostMapping
     @JsonView(User.UserSimpleView.class)
-    public User createUser(@RequestBody User user) {
+    public User createUser(@Valid @RequestBody User user, BindingResult errors) {
         System.out.println(user);
         User newUser = new User(user.getUsername(), user.getPassword());
         newUser.setId("1");
         return newUser;
     }
 
+    @PutMapping("/{id:\\d+}")
+    @JsonView(User.UserDetailView.class)
+    public User update(@Valid @RequestBody User user, BindingResult errors) {
+        User target = new User();
+        if (errors.hasErrors()) {
+            //打印所有的错误信息
+            errors.getAllErrors().forEach(error ->{
+                //设置了字段上的自定义错误信息，就不用强转了，可以直接打印错误信息
+//                FieldError fieldError = (FieldError) error;
+//                System.out.println(fieldError.getField() + " " + fieldError.getDefaultMessage());
+                System.out.println(error.getDefaultMessage());
+            });
+
+        } else {
+            target.setId(user.getId());
+            target.setUsername(user.getUsername());
+            target.setPassword(user.getPassword());
+            target.setBirthday(user.getBirthday());
+        }
+
+        System.out.println("目标是:" + target);
+        return target;
+    }
+
+    @DeleteMapping("/{id:\\d+}")
+    public String delete() {
+        return null;
+    }
 }
 
 
