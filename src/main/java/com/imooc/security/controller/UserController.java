@@ -2,6 +2,7 @@ package com.imooc.security.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.imooc.security.domain.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -68,10 +69,12 @@ public class UserController {
         return target;
     }
 
+    //不打算返回响应体的话，直接使用void返回类型
     @DeleteMapping("/{id:\\d+}")
-    public String delete() {
-        return null;
+    @ResponseStatus(code= HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String id) {
     }
+
 }
 
 

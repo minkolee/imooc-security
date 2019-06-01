@@ -76,6 +76,14 @@ public class ImoocSecurityApplicationTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.password").value("jenny3"))
                 .andReturn().getResponse().getContentAsString();
     }
+
+    @Test
+    public void whenDeleteSuccess() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/user/1").contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+
+    }
 }
 
 
