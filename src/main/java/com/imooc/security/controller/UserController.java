@@ -2,9 +2,9 @@ package com.imooc.security.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.imooc.security.domain.User;
+import com.imooc.security.exhandler.UserNotExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin("*")
 public class UserController {
 
     @GetMapping
@@ -33,13 +34,20 @@ public class UserController {
     // 注意，使用了@JsonView之后，那些没有加JsonView的字段都不会被展示
     @JsonView(User.UserDetailView.class)
     public User queryDetail(@PathVariable String id) {
-        return new User("tom", "gugugu");
+
+        throw new UserNotExistException(id);
+
+//        return new User("tom", "gugugu");
     }
 
     @PostMapping
     @JsonView(User.UserSimpleView.class)
-    public User createUser(@Valid @RequestBody User user, BindingResult errors) {
+    public User createUser(@Valid @RequestBody User user) {
+        System.out.println("POST响应接受");
         System.out.println(user);
+//        if(errors.hasErrors()){
+//            errors.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
+//        }
         User newUser = new User(user.getUsername(), user.getPassword());
         newUser.setId("1");
         return newUser;

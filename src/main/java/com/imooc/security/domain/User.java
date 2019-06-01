@@ -36,7 +36,7 @@ public class User {
 
     @JsonView(UserDetailView.class)
     @NotBlank(message = "密码不能为空白")
-    @MyValid
+//    @MyValid
     private String password;
 
     @JsonView(UserSimpleView.class)
