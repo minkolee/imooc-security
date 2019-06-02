@@ -35,9 +35,9 @@ public class UserController {
     @JsonView(User.UserDetailView.class)
     public User queryDetail(@PathVariable String id) {
 
-        throw new UserNotExistException(id);
+//        throw new UserNotExistException(id);
 
-//        return new User("tom", "gugugu");
+        return new User("tom", "gugugu");
     }
 
     @PostMapping

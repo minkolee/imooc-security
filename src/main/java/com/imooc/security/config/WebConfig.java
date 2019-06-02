@@ -16,14 +16,14 @@ import java.util.List;
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     //TimeInterceptor声明为Bean，然后注入进来
-    @Autowired
-    private TimeInterceptor timeInterceptor;
+//    @Autowired
+//    private TimeInterceptor timeInterceptor;
 
     //拦截器注册器，把自定义的拦截器注册一下
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(timeInterceptor);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(timeInterceptor);
+//    }
 
 //    @Bean
 //    public FilterRegistrationBean timeFilter() {
