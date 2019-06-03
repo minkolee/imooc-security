@@ -3,6 +3,8 @@ package com.imooc.security.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.imooc.security.domain.User;
 import com.imooc.security.exhandler.UserNotExistException;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ public class UserController {
     @GetMapping
     @JsonView(User.UserSimpleView.class)
     //RequestParam可以设置不传，以及默认值，原来不知道
+    @ApiOperation(value = "用户查询服务")
     public List<User> query(@RequestParam(required = false, defaultValue = "jenny") String username) {
         System.out.println(username);
         List<User> users = new ArrayList<>();
@@ -80,8 +83,11 @@ public class UserController {
     //不打算返回响应体的话，直接使用void返回类型
     @DeleteMapping("/{id:\\d+}")
     @ResponseStatus(code= HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable String id) {
+    public void delete(@ApiParam("用户id") @PathVariable String id) {
     }
+
+
+
 
 }
 

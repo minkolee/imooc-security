@@ -2,6 +2,7 @@ package com.imooc.security.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.imooc.security.validator.MyValid;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
@@ -32,14 +33,18 @@ public class User {
     // 2 给字段加上视图
     @JsonView(UserSimpleView.class)
     @NotBlank(message = "用户名不能为空白")
+    @ApiModelProperty(value = "用户名称")
     private String username;
 
     @JsonView(UserDetailView.class)
     @NotBlank(message = "密码不能为空白")
+    @ApiModelProperty(value = "用户密码")
+
 //    @MyValid
     private String password;
 
     @JsonView(UserSimpleView.class)
+    @ApiModelProperty(value = "用户id")
     private String id;
 
     @Past(message = "必须是过去的日期")
